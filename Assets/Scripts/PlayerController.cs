@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : NetworkBehaviour
+public class PlayerController : MonoBehaviour
 {
 
     private PlayerControls playerInput;
@@ -23,6 +23,7 @@ public class PlayerController : NetworkBehaviour
         playerInput = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
     }
+
     private void OnEnable()
     {
         playerInput.Enable();

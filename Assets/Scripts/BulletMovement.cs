@@ -3,9 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletMovement : MonoBehaviour
+public class BulletMovement : NetworkBehaviour
 {
     private float bulletLifeTime;
+
+    [SerializeField] private float bulletSpeed;
+
+    private void Update()
+    {        
+        Rigidbody2D bulletRB = GetComponent<Rigidbody2D>();
+        bulletRB.velocity = bulletSpeed * transform.up;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         PlayerStats hitTarget;
@@ -24,8 +33,6 @@ public class BulletMovement : MonoBehaviour
 
     private void DestroyBullet()
     {
-
         Destroy(this.gameObject);
-
     }
 }

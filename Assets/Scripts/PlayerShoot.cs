@@ -5,12 +5,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : NetworkBehaviour
 {
     PlayerControls shootInput;
+    GameObject bullet;
 
     [SerializeField] private GameObject bulletPrefab;
-    [SerializeField] private float bulletSpeed;
     [SerializeField] private Transform shootPos;
 
     [SerializeField] private float reloadTime;
@@ -25,13 +25,15 @@ public class PlayerShoot : MonoBehaviour
 
     private void Update()
     {
+        //if (!isLocalPlayer) return;
+
         if (playerShooting)
         {
             float timeSinceLastShot = Time.time - lastShotTime;
 
             if (timeSinceLastShot >= reloadTime)
             {
-                FireBullet();
+                CmdFireBullet();
 
                 lastShotTime = Time.time;
             }
@@ -45,17 +47,18 @@ public class PlayerShoot : MonoBehaviour
         shootInput.Player.Shoot.canceled += OnShootingCanceled;
     }
 
-    private void FireBullet()
+    [Command]
+    private void CmdFireBullet()
     {
-        GameObject bullet = Instantiate(bulletPrefab, shootPos.position, transform.rotation);
-        Rigidbody2D bulletRB = bullet.GetComponent<Rigidbody2D>();
-
-        bulletRB.velocity = bulletSpeed * transform.up;
+        bullet = Instantiate(bulletPrefab, shootPos.position, transform.rotation);
+        NetworkServer.Spawn(bullet);
     }
+
     private void OnShootingPerformed(InputAction.CallbackContext value)
     {
         playerShooting = true;
     }
+
     private void OnShootingCanceled(InputAction.CallbackContext value)
     {
         playerShooting = false;

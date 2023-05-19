@@ -1,13 +1,11 @@
 using Mirror;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Timeline;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
 
     private PlayerControls playerInput;
@@ -33,6 +31,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!isLocalPlayer) return;
+
         rb.velocity = moveDirection * moveSpeed;
 
 

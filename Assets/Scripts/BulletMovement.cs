@@ -6,6 +6,7 @@ using Photon.Pun;
 public class BulletMovement : MonoBehaviour
 {
     [SerializeField] private float bulletSpeed;
+    [SerializeField] private float bulletLifeTime;
 
     private void Update()
     {        
@@ -15,22 +16,7 @@ public class BulletMovement : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        PlayerStats hitTarget;
-        hitTarget = collision.gameObject.GetComponent<PlayerStats>();
-        if (hitTarget.GetComponent<PlayerStats>())
-        {
-            hitTarget.GetComponent<PlayerStats>().health -= 1;
-            Debug.Log(hitTarget.GetComponent<PlayerStats>().health);
-            if (hitTarget.health <= 0)
-            {
-                Destroy(hitTarget.gameObject);
-            }
-        }
-        DestroyBullet();
+        Destroy(gameObject);
     }
 
-    private void DestroyBullet()
-    {
-        Destroy(this.gameObject);
-    }
 }

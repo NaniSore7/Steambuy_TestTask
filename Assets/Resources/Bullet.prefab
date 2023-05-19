@@ -87,6 +87,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletSpeed: 12
+  bulletLifeTime: 5
 --- !u!114 &4755129878897065293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -105,7 +106,8 @@ MonoBehaviour:
   Synchronization: 3
   OwnershipTransfer: 0
   observableSearch: 2
-  ObservedComponents: []
+  ObservedComponents:
+  - {fileID: 1286139427659721625}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0

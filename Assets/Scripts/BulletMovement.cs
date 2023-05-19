@@ -1,12 +1,9 @@
-using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BulletMovement : NetworkBehaviour
+public class BulletMovement : MonoBehaviour
 {
-    private float bulletLifeTime;
-
     [SerializeField] private float bulletSpeed;
 
     private void Update()

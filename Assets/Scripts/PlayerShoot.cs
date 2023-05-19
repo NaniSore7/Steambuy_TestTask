@@ -1,11 +1,10 @@
-using Mirror;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public class PlayerShoot : NetworkBehaviour
+public class PlayerShoot : MonoBehaviour
 {
     PlayerControls shootInput;
     GameObject bullet;
@@ -47,11 +46,9 @@ public class PlayerShoot : NetworkBehaviour
         shootInput.Player.Shoot.canceled += OnShootingCanceled;
     }
 
-    [Command]
     private void CmdFireBullet()
     {
         bullet = Instantiate(bulletPrefab, shootPos.position, transform.rotation);
-        NetworkServer.Spawn(bullet);
     }
 
     private void OnShootingPerformed(InputAction.CallbackContext value)

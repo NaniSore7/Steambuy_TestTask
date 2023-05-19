@@ -11,7 +11,7 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviourPunCallbacks
 {
     [SerializeField] private TMP_InputField serverName;
-    
+    [SerializeField] private GameObject errorPanel;
     public void CreateRoom()
     {
         if (PhotonNetwork.IsConnected && serverName.text.Length > 0)
@@ -23,7 +23,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("Something went wrong trying to create room");
+            errorPanel.SetActive(true);
         }
     }
 
@@ -34,7 +34,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public override void OnCreateRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Failed to create room");
+        errorPanel.SetActive(true);
     }
 
     public void JoinRoom()
@@ -45,7 +45,7 @@ public class MenuManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            Debug.Log("Something went wrong trying to join room");
+            errorPanel.SetActive(true);
         }
     }
 
@@ -57,6 +57,15 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        Debug.Log("Failed to join room");
+        errorPanel.SetActive(true);
+    }
+
+    public void LeaveRoomButton()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+    public override void OnLeftRoom()
+    {
+        PhotonNetwork.LoadLevel("Lobby");
     }
 }

@@ -127,8 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0a56a5655d4c4743b85ed467f996647, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  deathPanel: {fileID: 0}
-  health: 5
+  coinsCollected: 0
 --- !u!114 &-4509350651006939265
 MonoBehaviour:
   m_ObjectHideFlags: 0

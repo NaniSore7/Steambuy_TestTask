@@ -22,7 +22,7 @@ public class PhotonConnect : MonoBehaviourPunCallbacks
     public override void OnJoinedLobby()
     {
         Debug.Log("Connected to lobby");
-        SceneManager.LoadScene("Lobby");
+        PhotonNetwork.LoadLevel("Lobby");
         base.OnJoinedLobby();
     }
 }

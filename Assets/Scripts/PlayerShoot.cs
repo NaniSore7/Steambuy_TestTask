@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 public class PlayerShoot : MonoBehaviour
 {
+    private PhotonView phView;
+
     PlayerControls shootInput;
     GameObject bullet;
 
@@ -19,12 +22,14 @@ public class PlayerShoot : MonoBehaviour
 
     private void Awake()
     {
+        phView = GetComponent<PhotonView>();
+
         shootInput = new PlayerControls();
     }
 
     private void Update()
     {
-        //if (!isLocalPlayer) return;
+        if (!phView.IsMine) return;
 
         if (playerShooting)
         {
@@ -32,7 +37,7 @@ public class PlayerShoot : MonoBehaviour
 
             if (timeSinceLastShot >= reloadTime)
             {
-                CmdFireBullet();
+                FireBullet();
 
                 lastShotTime = Time.time;
             }
@@ -46,9 +51,9 @@ public class PlayerShoot : MonoBehaviour
         shootInput.Player.Shoot.canceled += OnShootingCanceled;
     }
 
-    private void CmdFireBullet()
+    private void FireBullet()
     {
-        bullet = Instantiate(bulletPrefab, shootPos.position, transform.rotation);
+        bullet = PhotonNetwork.Instantiate(bulletPrefab.name, shootPos.position, transform.rotation);
     }
 
     private void OnShootingPerformed(InputAction.CallbackContext value)

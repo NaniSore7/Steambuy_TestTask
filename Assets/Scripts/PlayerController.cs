@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Photon.Pun;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    private PhotonView phView;
 
     private PlayerControls playerInput;
     private Vector2 moveDirection = Vector2.zero;
@@ -17,6 +19,8 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
+        phView = GetComponent<PhotonView>();
+
         playerInput = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -30,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!phView.IsMine) return;
 
         rb.velocity = moveDirection * moveSpeed;
 
